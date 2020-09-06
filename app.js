@@ -135,8 +135,8 @@ async function renderQuestions() {
             const moreEmployeesObject = await inquirer.prompt(moreEmployeeQuestion);
             addEmployees = moreEmployeesObject.more;
         }
-        const formattedAllEmployeesObject = [];
-        console.log(formattedAllEmployeesObject)
+        const totalEmployees = [];
+        //console.log(formattedAllEmployeesObject)
         myEmployee.forEach(element => {
             const name = element.name;
             const id = element.id;
@@ -146,25 +146,25 @@ async function renderQuestions() {
                 case "Manager": {
                     const officeNumber = element.thisAnswers.officeNumber;
                     const manager = new Manager(name, id, email, officeNumber);
-                    formattedAllEmployeesObject.push(manager);
+                    totalEmployees.push(manager);
                     break;
                 }
                 case "Intern": {
                     const school = element.thisAnswers.school;
                     const intern = new Intern(name, id, email, school);
-                    formattedAllEmployeesObject.push(intern);
+                    totalEmployees.push(intern);
                     break;
                 }
                 case "Engineer": {
                     const github = element.thisAnswers.github;
                     const engineer = new Engineer(name, id, email, github);
-                    formattedAllEmployeesObject.push(engineer);
+                    totalEmployees.push(engineer);
                     break;
                 }
             }
         });
 
-        return (formattedAllEmployeesObject);
+        return (totalEmployees);
     }
     catch (err) {
         //if error, return the error
@@ -173,8 +173,8 @@ async function renderQuestions() {
 }
 
 async function renderHTMLTemplete() {
-    const formattedAllEmployeesObject = await renderQuestions();
-    const outputHTML = await render(formattedAllEmployeesObject)
+    const totalEmployees = await renderQuestions();
+    const outputHTML = await render(totalEmployees)
     fs.writeFile(outputPath, outputHTML, function (err) {
         if (err) {
             return console.log(err);
