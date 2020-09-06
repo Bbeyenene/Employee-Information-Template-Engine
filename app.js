@@ -9,6 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const Employee = require("./lib/Employee");
 
 // Four general questions for every employee
 const employeeQuestions = [
@@ -107,13 +108,13 @@ const moreEmployeeQuestion = [
 //i.e.   try{  } catch(err){  }
 async function renderQuestions() {
     try {
-        const myEmployee = []
+        const myEmployees = []
         var addEmployees = true;
         while (addEmployees) {
             
             // Await the results from the prompt for general qestions, then store answers as employeeAnswers
             const employeeAnswers = await inquirer.prompt(employeeQuestions);
-            // for spesific quesions switch case is used based on employe etype(manager or intern or enginer).
+            // for spesific quesions switch case is used based on employe etype(manager or intern or engineer).
             switch (employeeAnswers.employeeType) {
                 case "Manager": {
                     const managerAnswers = await inquirer.prompt(managerQuestions);
@@ -131,32 +132,33 @@ async function renderQuestions() {
                     break;
                 }
             }
-            myEmployee.push(employeeAnswers);
+            myEmployees.push(employeeAnswers);
             const moreEmployeesObject = await inquirer.prompt(moreEmployeeQuestion);
             addEmployees = moreEmployeesObject.more;
         }
         const totalEmployees = [];
-        //console.log(formattedAllEmployeesObject)
-        myEmployee.forEach(element => {
-            const name = element.name;
-            const id = element.id;
-            const email = element.email;
-            const employeeType = element.employeeType;
+        // for each emloyee in my emmploye list add employee information
+        myEmployees.forEach(emloyee => {
+            const name = emloyee.name;
+            const id = emloyee.id;
+            const email = emloyee.email;
+            const employeeType = emloyee.employeeType;
+            //based on employee type add the additional information per employee and return total employee
             switch (employeeType) {
                 case "Manager": {
-                    const officeNumber = element.thisAnswers.officeNumber;
+                    const officeNumber = emloyee.thisAnswers.officeNumber;
                     const manager = new Manager(name, id, email, officeNumber);
                     totalEmployees.push(manager);
                     break;
                 }
                 case "Intern": {
-                    const school = element.thisAnswers.school;
+                    const school = employee.thisAnswers.school;
                     const intern = new Intern(name, id, email, school);
                     totalEmployees.push(intern);
                     break;
                 }
                 case "Engineer": {
-                    const github = element.thisAnswers.github;
+                    const github = emloyee.thisAnswers.github;
                     const engineer = new Engineer(name, id, email, github);
                     totalEmployees.push(engineer);
                     break;
@@ -171,8 +173,8 @@ async function renderQuestions() {
         console.log(err);
     }
 }
-
-async function renderHTMLTemplete() {
+// generate html template based on for every employee
+async function renderHTMLTemplate() {
     const totalEmployees = await renderQuestions();
     const outputHTML = await render(totalEmployees)
     fs.writeFile(outputPath, outputHTML, function (err) {
@@ -185,4 +187,4 @@ async function renderHTMLTemplete() {
     });
 }
 
-renderHTMLTemplete();
+renderHTMLTemplate();
