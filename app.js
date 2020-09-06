@@ -103,3 +103,88 @@ const moreEmployeeQuestion = [
         message: "Do you want to add more employees?",
     }
 ]
+
+// Async function to promise user input questions from the command line 
+//i.e.   try{  } catch(err){  }
+async function renderQuestions() {
+    try {
+        const myEmployee = []
+        var addEmployees = true;
+        while (addEmployees) {
+            //moreEmployee
+            // Await the results from the prompt, then store as employeeAnswers
+            const employeeAnswers = await inquirer.prompt(employeeQuestions);
+
+            switch (employeeAnswers.employeeType) {
+                case "Manager": {
+                    const managerAnswers = await inquirer.prompt(managerQuestions);
+                    employeeAnswers.supplementalAnswers = managerAnswers;
+                    break;
+                }
+                case "Intern": {
+                    const internAnswers = await inquirer.prompt(internQuestions);
+                    employeeAnswers.supplementalAnswers = internAnswers;
+                    break;
+                }
+                case "Engineer": {
+                    const engineerAnswers = await inquirer.prompt(engineerQuestions);
+                    employeeAnswers.supplementalAnswers = engineerAnswers;
+                    break;
+                }
+            }
+
+            // Pushing the employeeAnswers object into the  array
+            myEmployee.push(employeeAnswers);
+
+            // Asking a question to the user if they want to input more employee data
+            // The question is a boolean, returning true or false, stored within an object
+            const moreEmployeesObject = await inquirer.prompt(moreEmployeeQuestion);
+
+            // Going in the moreEmployeesObject and going to the more key
+            // The value there will either be true or false
+            // Set that value as the value of the variable moreEmployees
+            // The while loop will only continue to run moreEmployees is true
+            addEmployees = moreEmployeesObject.more;
+        }
+
+        // Initializing an empty array to hold all the formatted employee objects
+        const formattedAllEmployeesObject = [];
+        console.log(formattedAllEmployeesObject)
+        // Going through the raw data array and formatting it
+        // (Each element is an employee object)
+        myEmployee.forEach(element => {
+            const name = element.name;
+            const id = element.id;
+            const email = element.email;
+            const employeeType = element.employeeType;
+            // Running a switch case dependent on the employee type
+            switch (employeeType) {
+                case "Manager": {
+                    const officeNumber = element.supplementalAnswers.officeNumber;
+                    const manager = new Manager(name, id, email, officeNumber);
+                    formattedAllEmployeesObject.push(manager);
+                    break;
+                }
+                case "Intern": {
+                    const school = element.supplementalAnswers.school;
+                    const intern = new Intern(name, id, email, school);
+                    formattedAllEmployeesObject.push(intern);
+                    break;
+                }
+                case "Engineer": {
+                    const github = element.supplementalAnswers.github;
+                    const engineer = new Engineer(name, id, email, github);
+                    formattedAllEmployeesObject.push(engineer);
+                    break;
+                }
+            }
+        });
+
+        return (formattedAllEmployeesObject);
+
+    }
+    catch (err) {
+        //if error, return the error
+        console.log(err);
+    }
+}
