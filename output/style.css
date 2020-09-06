@@ -1,0 +1,23 @@
+.team-heading {
+    background-color: grey;
+    color: aliceblue;
+}
+.employee-card {
+    box-shadow: inset 4px 3px 8px 1px;
+  	-webkit-box-shadow: inset 4px 3px 8px 1px;
+    margin: 5px;
+}
+h2, h3 {
+    color: rgb(96, 16, 16);
+    text-align: center;
+}
+i {
+    color: rgb(44, 117, 125);
+}
+.card-header {
+    border: 1px solid #000000;
+}
+
+.list-group-item {
+    background-color: rgb(173, 230, 221);
+}

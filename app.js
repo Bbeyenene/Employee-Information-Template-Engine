@@ -138,15 +138,15 @@ async function renderQuestions() {
         }
         const totalEmployees = [];
         // for each emloyee in my emmploye list add employee information
-        myEmployees.forEach(emloyee => {
-            const name = emloyee.name;
-            const id = emloyee.id;
-            const email = emloyee.email;
-            const employeeType = emloyee.employeeType;
+        myEmployees.forEach(employee => {
+            const name = employee.name;
+            const id = employee.id;
+            const email = employee.email;
+            const employeeType = employee.employeeType;
             //based on employee type add the additional information per employee and return total employee
             switch (employeeType) {
                 case "Manager": {
-                    const officeNumber = emloyee.thisAnswers.officeNumber;
+                    const officeNumber = employee.thisAnswers.officeNumber;
                     const manager = new Manager(name, id, email, officeNumber);
                     totalEmployees.push(manager);
                     break;
@@ -158,7 +158,7 @@ async function renderQuestions() {
                     break;
                 }
                 case "Engineer": {
-                    const github = emloyee.thisAnswers.github;
+                    const github = employee.thisAnswers.github;
                     const engineer = new Engineer(name, id, email, github);
                     totalEmployees.push(engineer);
                     break;
