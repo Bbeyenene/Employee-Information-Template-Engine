@@ -10,7 +10,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-// General questions for every employee
+// Four general questions for every employee
 const employeeQuestions = [
     {
         type: "input",
@@ -50,7 +50,7 @@ const employeeQuestions = [
     },
     {
         type: "list",
-        name: "employeeType",
+        name: "employeeType", //employeeType will be used to render question specifically
         message: "Employee type:",
         choices: [
             "Manager",
@@ -103,7 +103,6 @@ const moreEmployeeQuestion = [
         message: "Do you want to add more employees?",
     }
 ]
-
 // Async function to promise user input questions from the command line 
 //i.e.   try{  } catch(err){  }
 async function renderQuestions() {
@@ -111,68 +110,53 @@ async function renderQuestions() {
         const myEmployee = []
         var addEmployees = true;
         while (addEmployees) {
-            //moreEmployee
-            // Await the results from the prompt, then store as employeeAnswers
+            
+            // Await the results from the prompt for general qestions, then store answers as employeeAnswers
             const employeeAnswers = await inquirer.prompt(employeeQuestions);
-
+            // for spesific quesions switch case is used based on employe etype(manager or intern or enginer).
             switch (employeeAnswers.employeeType) {
                 case "Manager": {
                     const managerAnswers = await inquirer.prompt(managerQuestions);
-                    employeeAnswers.supplementalAnswers = managerAnswers;
+                    employeeAnswers.thisAnswers = managerAnswers;
                     break;
                 }
                 case "Intern": {
                     const internAnswers = await inquirer.prompt(internQuestions);
-                    employeeAnswers.supplementalAnswers = internAnswers;
+                    employeeAnswers.thisAnswers = internAnswers;
                     break;
                 }
                 case "Engineer": {
                     const engineerAnswers = await inquirer.prompt(engineerQuestions);
-                    employeeAnswers.supplementalAnswers = engineerAnswers;
+                    employeeAnswers.thisAnswers = engineerAnswers;
                     break;
                 }
             }
-
-            // Pushing the employeeAnswers object into the  array
             myEmployee.push(employeeAnswers);
-
-            // Asking a question to the user if they want to input more employee data
-            // The question is a boolean, returning true or false, stored within an object
             const moreEmployeesObject = await inquirer.prompt(moreEmployeeQuestion);
-
-            // Going in the moreEmployeesObject and going to the more key
-            // The value there will either be true or false
-            // Set that value as the value of the variable moreEmployees
-            // The while loop will only continue to run moreEmployees is true
             addEmployees = moreEmployeesObject.more;
         }
-
-        // Initializing an empty array to hold all the formatted employee objects
         const formattedAllEmployeesObject = [];
         console.log(formattedAllEmployeesObject)
-        // Going through the raw data array and formatting it
-        // (Each element is an employee object)
         myEmployee.forEach(element => {
             const name = element.name;
             const id = element.id;
             const email = element.email;
             const employeeType = element.employeeType;
-            // Running a switch case dependent on the employee type
             switch (employeeType) {
                 case "Manager": {
-                    const officeNumber = element.supplementalAnswers.officeNumber;
+                    const officeNumber = element.thisAnswers.officeNumber;
                     const manager = new Manager(name, id, email, officeNumber);
                     formattedAllEmployeesObject.push(manager);
                     break;
                 }
                 case "Intern": {
-                    const school = element.supplementalAnswers.school;
+                    const school = element.thisAnswers.school;
                     const intern = new Intern(name, id, email, school);
                     formattedAllEmployeesObject.push(intern);
                     break;
                 }
                 case "Engineer": {
-                    const github = element.supplementalAnswers.github;
+                    const github = element.thisAnswers.github;
                     const engineer = new Engineer(name, id, email, github);
                     formattedAllEmployeesObject.push(engineer);
                     break;
@@ -181,10 +165,24 @@ async function renderQuestions() {
         });
 
         return (formattedAllEmployeesObject);
-
     }
     catch (err) {
         //if error, return the error
         console.log(err);
     }
 }
+
+async function renderHTMLTemplete() {
+    const formattedAllEmployeesObject = await renderQuestions();
+    const outputHTML = await render(formattedAllEmployeesObject)
+    fs.writeFile(outputPath, outputHTML, function (err) {
+        if (err) {
+            return console.log(err);
+        }
+        else {
+            console.log("Successfully wrote the team.html file!");
+        }
+    });
+}
+
+renderHTMLTemplete();
