@@ -1,6 +1,6 @@
 # # Employee-Information-Template-Engine
    ## Description
-      Employee-Information-Template-Engine is a terminal based application that generates an employee inormation based on the inputs provided. This app can help managers to save time in creating html template and styling for every employee. [Bbeyenene](https://github.com/Bbeyenene) developed this app as a sample on personal skill on Node CLI and jest testing. 
+   Employee-Information-Template-Engine is a terminal based application that generates an employee inormation based on the inputs provided. This app can help managers to save time in creating html template and styling for every employee. [Bbeyenene](https://github.com/Bbeyenene) developed this app as a sample on personal skill on Node CLI and jest testing. 
    ## Table of Contents
    * [Installation Instructions](#installation-instructions)
    
@@ -31,7 +31,7 @@
    
    ## Developers Contact Information
     * LinkdIn Profile: [Berhane](https://www.linkedin.com/in/berhane-beyene/)
-    * URL : N/A
+    * URL : https://github.com/Bbeyenene/Employee-Information-Template-Engine/settings
     * Email: monoxica2004@yahoo.com
    ## License
     ### This application is licensed under [![License:MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT).
