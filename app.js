@@ -60,6 +60,7 @@ const employeeQuestions = [
         ]
     }
 ]
+
 // specific questions for managers only
 const managerQuestions = [
     {
@@ -78,6 +79,7 @@ const managerQuestions = [
         }
     }
 ]
+
 // specific questions for interns only
 const internQuestions = [
     {
@@ -87,6 +89,7 @@ const internQuestions = [
         type: "string"
     }
 ]
+
 // specific questions for engineers only
 const engineerQuestions = [
     {
@@ -96,6 +99,7 @@ const engineerQuestions = [
         type: "string"
     }
 ]
+
 // Question asking the user if there is a need to add more employee data
 const moreEmployeeQuestion = [
     {
@@ -104,6 +108,7 @@ const moreEmployeeQuestion = [
         message: "Do you want to add more employees?",
     }
 ]
+
 // Async function to promise user input questions from the command line 
 //i.e.   try{  } catch(err){  }
 async function renderQuestions() {
@@ -137,12 +142,14 @@ async function renderQuestions() {
             addEmployees = moreEmployeesObject.more;
         }
         const totalEmployees = [];
+
         // for each emloyee in my emmploye list add employee information
         myEmployees.forEach(employee => {
             const name = employee.name;
             const id = employee.id;
             const email = employee.email;
             const employeeType = employee.employeeType;
+
             //based on employee type add the additional information per employee and return total employee
             switch (employeeType) {
                 case "Manager": {
@@ -165,7 +172,6 @@ async function renderQuestions() {
                 }
             }
         });
-
         return (totalEmployees);
     }
     catch (err) {
@@ -173,6 +179,7 @@ async function renderQuestions() {
         console.log(err);
     }
 }
+
 // generate html template based on for every employee
 async function renderHTMLTemplate() {
     const totalEmployees = await renderQuestions();
@@ -187,4 +194,5 @@ async function renderHTMLTemplate() {
     });
 }
 
+//calling for the renderHTMLTemplet function above
 renderHTMLTemplate();
