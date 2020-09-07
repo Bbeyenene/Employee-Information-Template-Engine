@@ -31,7 +31,7 @@
    
    ## Developers Contact Information
     * LinkdIn Profile: [Berhane](https://www.linkedin.com/in/berhane-beyene/)
-    * URL : https://github.com/Bbeyenene/Employee-Information-Template-Engine/settings
+    * URL : https://bbeyenene.github.io/Employee-Information-Template-Engine/output/team.html
     * Email: monoxica2004@yahoo.com
    ## License
     ### This application is licensed under [![License:MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT).
