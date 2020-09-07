@@ -1,3 +1,7 @@
+.d-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
 .team-heading {
     background-color: grey;
     color: aliceblue;
