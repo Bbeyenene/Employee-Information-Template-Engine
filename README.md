@@ -23,10 +23,11 @@
    5. You will be prompted with questions and  "Successfully wrote the team.html file!" will be desplayed after answering all the questions.
    7. Your team.html  is in your output directory where you can open it in any browser.
    
-   ##Image of the generated webpage
+   ## Image of the generated webpage
    ![Team html](Images/team-html.png)
 
   [Click me for video demonstration](https://drive.google.com/file/d/1u4gZPA9n1w6ACgvVr6Pze1uFuoJqein8/view?usp=sharing)
+
    ## Contributiion
    [Bbeyenene](https://github.com/Bbeyenene) is the only contrubuter to this project.
    
